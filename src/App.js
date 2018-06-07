@@ -27,7 +27,7 @@ class App extends Component {
     return (
    
         <div className="App">
-          <Test></Test>
+          <Test selfProps='selfProps'></Test>
         </div>
     
      
