@@ -20,7 +20,7 @@ function count(num=0,action) {
   }
   function count2(num2=0,action) {
     switch(action.type){
-      case 'add':
+      case 'add2':
         return num2 + 1
       default:
         return num2

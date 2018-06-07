@@ -5,8 +5,9 @@ export function createStore(reducer,initState){
     let currentState = initState;
     let currentListen = [];
 
-    function dispatch(action) {       
+    function dispatch(action) {    
         currentState = currentReducer(currentState,action);
+       
         currentListen.forEach(v => v())
         return action
      }
@@ -30,15 +31,22 @@ export function createStore(reducer,initState){
 }
 
 //  返回一个rootReducer,store每次dispatch，执行所有的reducer函数，并把对应的当前state和action传进去，更新数据，返回新的状态对象。
+// 如果有改变，则每返回新的状态树，没有的话(action没有命中任何一个reducer)，返回上次的值。
+//遇到的坑：开不开辟新的内存空间，第一版：完全开辟（耗性能），第二版：开始想节约内存，完全不开辟（不刷新视图），第三版：改变才开辟
 
- export function combineReducers(reducerObj) {
-   let rootReducer  = {};
-
-   return (currentState={},action) => {
-
+export function combineReducers(reducerObj) {
+    return (currentState={},action) => {
+        let hasChanged = false;
+        let newState = {}
         for(let key in reducerObj){
-            rootReducer[key] = reducerObj[key](currentState[key],action);
+            const nextState = reducerObj[key](currentState[key],action);
+            if(currentState[key] !== nextState){
+                newState[key] = nextState;
+                hasChanged = true
+            }
+           
         }
-        return {...rootReducer}
-    }
-}
+        return hasChanged?newState:currentState
+     }
+ }
+ 
