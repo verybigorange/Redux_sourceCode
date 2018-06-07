@@ -40,10 +40,8 @@ export function combineReducers(reducerObj) {
         let newState = {}
         for(let key in reducerObj){
             const nextState = reducerObj[key](currentState[key],action);
-            if(currentState[key] !== nextState){
-                newState[key] = nextState;
-                hasChanged = true
-            }
+            if(currentState[key] !== nextState)  hasChanged = true
+            newState[key] = nextState;
            
         }
         return hasChanged?newState:currentState
