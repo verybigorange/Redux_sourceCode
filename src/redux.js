@@ -57,3 +57,18 @@ export function combineReducers(reducerObj) {
     return finalActionObj
  }
  
+//  从右到左把接收到的函数合成后的最终函数。运行最终函数时，从右到左依次执行所有的函数的小函数。因为有顺序问题，所以有的redux中间件有先后顺序。
+ export function compose(...fns){
+    if(fns.length === 0) return (...args) => args 
+    if(fns.length === 1) return fns[0]
+    return fns.reduce((a,b) => (...args) => a(b(...args)))  //最后返回一个函数，b执行结果作为a的参数再执行
+    /* 
+        return fns.reduce((a,b) => (...args) => a(b(...args)))和
+        return fns.reduce((a,b) => (...args) => a(b(args)))中arg和...arg的区别
+        区别:args是数组,一般和applay一起用，...args将args中的每个元素结构出来
+    */
+ }
+
+ export function applyMiddleware(){
+
+ }

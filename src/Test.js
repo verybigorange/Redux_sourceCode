@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from './react-redux.js'
 // import { connect } from 'react-redux'
-// import { bindActionCreators } from 'redux'
-import { bindActionCreators } from './redux.js'
+import { applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import saga from 'redux-saga';
+import { bindActionCreators,compose } from './redux.js'
 
 const mapStateToProps = (state) =>{
     return {
