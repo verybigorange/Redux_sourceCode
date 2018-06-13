@@ -47,4 +47,13 @@ export function combineReducers(reducerObj) {
         return hasChanged?newState:currentState
      }
  }
+
+
+ export function bindActionCreators(actionObj,dispatch){
+    let finalActionObj = {}
+    for(let key in actionObj){
+        finalActionObj[key] = ()=>dispatch(actionObj[key].apply(this,arguments))
+    }
+    return finalActionObj
+ }
  
