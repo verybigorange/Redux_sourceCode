@@ -4,9 +4,11 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 // import { Provider } from 'react-redux'
-// import  {combineReducers}  from 'redux'
-import  {createStore,combineReducers}  from './redux.js'
+import  {createStore}  from 'redux'
+import  { combineReducers,applyMiddleware}  from './redux.js'
 import { Provider } from './react-redux.js'
+
+import thunk from 'redux-thunk';
 
 function count(num=0,action) {
     switch(action.type){
@@ -33,7 +35,7 @@ function count(num=0,action) {
  
 //   const store = createStore(count)
 // const init_data = {init:0}
-const store = createStore(rootReducer)
+const store = createStore(rootReducer,applyMiddleware(thunk))
 store.subscribe(()=>{
     console.log('触发了dispatch',store.getState())
 })

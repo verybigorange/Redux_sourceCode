@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { connect } from './react-redux.js'
-// import { connect } from 'react-redux'
-import { applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
-import saga from 'redux-saga';
+// import { connect } from './react-redux.js'
+import { connect } from 'react-redux'
 import { bindActionCreators,compose } from './redux.js'
+
 
 const mapStateToProps = (state) =>{
     return {
@@ -13,21 +11,26 @@ const mapStateToProps = (state) =>{
 }
 
 function action1() {
-    return {type:'add'}
+    return dispatch => {
+        setTimeout(()=>{
+            dispatch({type:'add'})
+        },1000)
+    }
+   
 }
 function action2() {
     return {type:'minus'}
 }
 
-const mapStateToDispatch = (dispatch)=>({
-    actions:bindActionCreators({action1,action2},dispatch)
-})
+const mapStateToDispatch = {
+    action1
+}
 
 
 function Test(obj) {
     console.log(obj)
     return(
-        <div onClick={obj.actions.action1}>test{obj.num}</div>
+        <div onClick={obj.action1}>test{obj.num}</div>
     )
 }
 
