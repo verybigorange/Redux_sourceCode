@@ -69,6 +69,31 @@ export function combineReducers(reducerObj) {
     */
  }
 
- export function applyMiddleware(){
+ export function applyMiddleware(...middlewares){
+    return createStore => (...args) => {
+        const store = createStore(...args);
+        
+        let dispatch = ()=>{
+            throw new Error(`待所有中间件compose后合成一个加强版的dispatch，才能执行dispatch保证dispatch的时候每个中间件都能执行一遍。`)
+        }
 
+        const middlewareApi = { 
+            getState:store.getState,
+            dispatch:(...args) => dispatch(...args)
+        }
+
+        let chain = [];
+     
+        chain = middlewares.map(middleware  => middleware (middlewareApi));
+        
+        // ({ dispatch, getState }) => next => action => {}中间件的next是逐渐加强版的dispatch
+        // nextMiddleware（（action）=>{.... next(action)}）
+        // 把函数作为返回值，再传给下一个
+        dispatch = compose(...chain)(store.dispatch)    
+       
+        return {
+            ...store,
+            dispatch
+        }
+    }
  }
