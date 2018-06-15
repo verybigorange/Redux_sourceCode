@@ -22,14 +22,14 @@ function action2() {
     return {type:'minus'}
 }
 
-// const mapStateToDispatch = {
-//     action2,
-//     action1
-// }
-const mapStateToDispatch = (dispatch) => ({
-    action2:()=>action2(dispatch),
-    action1:()=>action1(dispatch)
-})
+const mapStateToDispatch = {
+    action2,
+    action1
+}
+// const mapStateToDispatch = (dispatch) => ({
+//     action2:()=>action2(dispatch),
+//     action1:()=>action1(dispatch)
+// })
 
 function Test(obj) {
     console.log(obj)

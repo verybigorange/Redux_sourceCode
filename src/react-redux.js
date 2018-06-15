@@ -63,13 +63,17 @@ export function connect(mapStateToProps,mapStateToDispatch) {
 
             merge(){
                 let finalMapStateToDispatch;
-
-                // 当mapStateToDispatch为函数的时候，将dispatch传进去，获得对象再通过bindActionCreators将对象的每个元素变成每个dispatch方法。
-                if(typeof(mapStateToDispatch === 'function')){
+            
+                // 当mapStateToDispatch为函数的时候，将dispatch传进去，获得对象再通过bindActionCreators将dispatch和函数中对象绑定起来，形成新的Object<Funcition>
+                if(typeof(mapStateToDispatch) === 'function'){
                     finalMapStateToDispatch = bindActionCreators(mapStateToDispatch(this.store.dispatch),this.store.dispatch);
                 } 
 
-                console.log(bindActionCreators(mapStateToDispatch(this.store.dispatch),this.store.dispatch))
+                 // 当mapStateToDispatch为对象的时候，直接通过bindActionCreators将dispatch和函数中对象绑定起来，形成新的Object<Funcition>
+                if(typeof(mapStateToDispatch) === 'object'){
+                    finalMapStateToDispatch = bindActionCreators(mapStateToDispatch,this.store.dispatch);
+                } 
+
                 return {
                     ...this.props,
                     ...mapStateToProps(this.store.getState(),this.props),
