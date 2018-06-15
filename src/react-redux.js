@@ -20,7 +20,7 @@ Provider.childContextTypes = {
     store:PropTypes.object
 }
 
-export function connect(mapStateToProps,mapStateToDispatch) { 
+export function connect(mapStateToProps,mapDispatchToProps) { 
     return function(WrapperComponent){
         class Connect extends Component {
             constructor(props,context){
@@ -62,22 +62,22 @@ export function connect(mapStateToProps,mapStateToDispatch) {
             }
 
             merge(){
-                let finalMapStateToDispatch;
+                let finalmapDispatchToProps;
             
-                // 当mapStateToDispatch为函数的时候，将dispatch传进去，获得对象再通过bindActionCreators将dispatch和函数中对象绑定起来，形成新的Object<Funcition>
-                if(typeof(mapStateToDispatch) === 'function'){
-                    finalMapStateToDispatch = bindActionCreators(mapStateToDispatch(this.store.dispatch),this.store.dispatch);
+                // 当mapDispatchToProps为函数的时候，将dispatch传进去，获得对象再通过bindActionCreators将dispatch和函数中对象绑定起来，形成新的Object<Funcition>
+                if(typeof(mapDispatchToProps) === 'function'){
+                    finalmapDispatchToProps = bindActionCreators(mapDispatchToProps(this.store.dispatch),this.store.dispatch);
                 } 
 
-                 // 当mapStateToDispatch为对象的时候，直接通过bindActionCreators将dispatch和函数中对象绑定起来，形成新的Object<Funcition>
-                if(typeof(mapStateToDispatch) === 'object'){
-                    finalMapStateToDispatch = bindActionCreators(mapStateToDispatch,this.store.dispatch);
+                 // 当mapDispatchToProps为对象的时候，直接通过bindActionCreators将dispatch和函数中对象绑定起来，形成新的Object<Funcition>
+                if(typeof(mapDispatchToProps) === 'object'){
+                    finalmapDispatchToProps = bindActionCreators(mapDispatchToProps,this.store.dispatch);
                 } 
 
                 return {
                     ...this.props,
                     ...mapStateToProps(this.store.getState(),this.props),
-                    ...finalMapStateToDispatch
+                    ...finalmapDispatchToProps
                 }
             }
 

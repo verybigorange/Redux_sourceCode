@@ -22,11 +22,11 @@ function action2() {
     return {type:'minus'}
 }
 
-const mapStateToDispatch = {
+const mapDispatchToProps = {
     action2,
     action1
 }
-// const mapStateToDispatch = (dispatch) => ({
+// const mapDispatchToProps = (dispatch) => ({
 //     action2:()=>action2(dispatch),
 //     action1:()=>action1(dispatch)
 // })
@@ -42,5 +42,5 @@ function Test(obj) {
     )
 }
 
-export default connect(mapStateToProps,mapStateToDispatch)(Test);
+export default connect(mapStateToProps,mapDispatchToProps)(Test);
 // export default Test
