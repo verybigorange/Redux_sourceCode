@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { bindActionCreators } from './redux.js'
+// import { bindActionCreators } from 'redux'
 
 export class Provider extends Component {
     //把store放在context上，让子组件可以访问
@@ -60,10 +62,18 @@ export function connect(mapStateToProps,mapStateToDispatch) {
             }
 
             merge(){
+                let finalMapStateToDispatch;
+
+                // 当mapStateToDispatch为函数的时候，将dispatch传进去，获得对象再通过bindActionCreators将对象的每个元素变成每个dispatch方法。
+                if(typeof(mapStateToDispatch === 'function')){
+                    finalMapStateToDispatch = bindActionCreators(mapStateToDispatch(this.store.dispatch),this.store.dispatch);
+                } 
+
+                console.log(bindActionCreators(mapStateToDispatch(this.store.dispatch),this.store.dispatch))
                 return {
                     ...this.props,
                     ...mapStateToProps(this.store.getState(),this.props),
-                    ...mapStateToDispatch(this.store.dispatch)
+                    ...finalMapStateToDispatch
                 }
             }
 
