@@ -1,6 +1,17 @@
 //创建一个store，当前状态树、当前rootReducer，还有订阅的事件集合都是私有变量。
 //创建一个store的时候，会先通过dispatch一个初始化action来执行rootReducer，拿到所有reducer的默认state。
-export function createStore(reducer,initState){
+export function createStore(reducer,initState,enhancer){
+    
+    // 没有传初始状态值
+    if(typeof(initState) === 'function'){
+        enhancer = initState
+        initState = undefined
+    }
+    // 当中间件存在时才执行
+    if(typeof(enhancer) === 'function'){
+        return enhancer(createStore)(reducer,initState)
+    }
+
     let currentReducer = reducer;
     let currentState = initState;
     let currentListen = [];
