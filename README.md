@@ -11,8 +11,8 @@
 * [react-redux](./src/react-redux.js)
     * Provider （完成）
     * connect  （完成）
-* [redux中间件]()
-    * redux-thunk （未完成）
+* [redux中间件](./src/middlewares)
+    * [redux-thunk](./src/middlewares/redux_thunk.js) （完成）
     * redux-logger （未完成）
     * Reselect （未完成）
 

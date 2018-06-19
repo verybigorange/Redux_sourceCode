@@ -8,7 +8,8 @@ import registerServiceWorker from './registerServiceWorker';
 import  { createStore,combineReducers,applyMiddleware}  from './redux.js'
 import { Provider } from './react-redux.js'
 
-import thunk from 'redux-thunk';
+// import thunk from 'redux-thunk';
+import thunk from './middlewares/redux_thunk.js'
 
 function count(num=0,action) {
     switch(action.type){
